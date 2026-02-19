@@ -1,5 +1,5 @@
 # Use Java 17 as base image
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine
 # Create app directory
 WORKDIR /app
 # Copy the built jar file
