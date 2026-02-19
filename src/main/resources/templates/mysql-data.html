@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MySQL Event Records</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-900"><i class="fas fa-database text-blue-600 mr-2"></i> MySQL Database Records</h1>
+            <a href="/" class="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition">Back to Dashboard</a>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-slate-50 border-b">
+                    <tr>
+                        <th class="px-6 py-4 font-bold text-slate-600">ID</th>
+                        <th class="px-6 py-4 font-bold text-slate-600">Event Title</th>
+                        <th class="px-6 py-4 font-bold text-slate-600">Venue</th>
+                        <th class="px-6 py-4 font-bold text-slate-600 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="fullDataTable">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        fetch('/api/events')
+            .then(res => res.json())
+            .then(data => {
+                const tableBody = document.getElementById('fullDataTable');
+                data.forEach(event => {
+                    tableBody.innerHTML += `
+                        <tr class="border-b hover:bg-slate-50 transition">
+                            <td class="px-6 py-4 text-slate-500 font-mono text-sm">${event.id}</td>
+                            <td class="px-6 py-4 font-semibold text-slate-800">${event.title}</td>
+                            <td class="px-6 py-4 text-slate-600">${event.venue || 'Jaipur'}</td>
+                            <td class="px-6 py-4 text-right">
+                                <a href="${event.eventUrl}" target="_blank" class="text-blue-600 hover:underline text-sm">View Event</a>
+                            </td>
+                        </tr>`;
+                });
+            });
+    </script>
+</body>
+</html>
